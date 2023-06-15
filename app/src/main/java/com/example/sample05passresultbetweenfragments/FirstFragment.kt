@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.example.sample05passresultbetweenfragments.databinding.FragmentFirstBinding
 
@@ -32,11 +31,13 @@ class FirstFragment : Fragment() {
             parentFragmentManager
                 .setFragmentResultListener(KEY_RESULT, viewLifecycleOwner) {_, bundle ->
                     editText1.setText(bundle.getString(KEY_TEXT_RESULT))
+                    textView2.text = bundle.getBoolean(KEY_SWITCH).toString()
                 }
 
             button1.setOnClickListener {
                 val text = editText1.text.toString()
-                val secondFragment = SecondFragment.getInstance(text)
+                val check = checkbox.isChecked
+                val secondFragment = SecondFragment.getInstance(text, check)
                 addFragment(secondFragment)
             }
         }
@@ -51,5 +52,6 @@ class FirstFragment : Fragment() {
     companion object {
         const val KEY_RESULT = "key_result"
         const val KEY_TEXT_RESULT = "key_text_result"
+        const val KEY_SWITCH = "key_switch"
     }
 }

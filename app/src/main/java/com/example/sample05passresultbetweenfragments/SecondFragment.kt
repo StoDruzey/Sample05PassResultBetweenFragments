@@ -32,11 +32,17 @@ class SecondFragment : Fragment() {
                 parentFragmentManager
                     .setFragmentResult(
                         FirstFragment.KEY_RESULT,
-                        bundleOf(FirstFragment.KEY_TEXT_RESULT to editText2.text.toString()))
+                        bundleOf(
+                            FirstFragment.KEY_TEXT_RESULT to editText2.text.toString(),
+                            FirstFragment.KEY_SWITCH to switcher.isChecked
+                        )
+                    )
+//                requireActivity().onBackPressed()
                 parentFragmentManager.popBackStack()
             }
 
             editText2.setText(requireArguments().getString(KEY_TEXT2))
+            textView2.text = requireArguments().getBoolean(KEY_CHECKBOX).toString()
         }
     }
 
@@ -48,11 +54,11 @@ class SecondFragment : Fragment() {
 
     companion object {
         private const val KEY_TEXT2 = "key_text2"
+        private const val KEY_CHECKBOX = "key_checkbox"
 
-        fun getInstance(text: String): Fragment {
+        fun getInstance(text: String, check: Boolean): Fragment {
             return SecondFragment()
-                .apply { arguments = bundleOf(KEY_TEXT2 to text) }
-
+                .apply { arguments = bundleOf(KEY_TEXT2 to text, KEY_CHECKBOX to check) }
         }
     }
 }
